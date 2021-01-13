@@ -11,7 +11,7 @@ async function save(user) {
 
 async function findTaskFromUser(id) {
   try {
-    const tasks = await knex('users').where({ id }).select('*');
+    const tasks = await knex('tasks').where({ user_id: id }).select('*');
     return tasks;
   } catch (err) {
     return err;
