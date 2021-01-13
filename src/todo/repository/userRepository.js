@@ -21,7 +21,20 @@ async function userExists(email) {
   }
 }
 
+async function findUserById(id) {
+  try {
+    const row = await knex('users').where({ id }).first();
+    if (row) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    return err;
+  }
+}
+
 module.exports = {
   save,
   userExists,
+  findUserById,
 };
