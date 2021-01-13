@@ -12,7 +12,7 @@ async function save(task) {
 async function taskExists(task) {
   try {
     const row = await knex('tasks')
-      .where({ title: task.title, description: task.description })
+      .where({ title: task.title, user_id: task.user_id })
       .first();
     if (row) {
       return true;
