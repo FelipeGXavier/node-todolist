@@ -9,7 +9,7 @@ async function save(user) {
   }
 }
 
-async function findTaskFromUser(id) {
+async function findTasksByUser(id) {
   try {
     const tasks = await knex('tasks').where({ user_id: id }).select('*');
     return tasks;
@@ -46,5 +46,5 @@ module.exports = {
   save,
   userExists,
   findUserById,
-  findTaskFromUser,
+  findTasksByUser,
 };

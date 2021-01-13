@@ -1,7 +1,7 @@
 const {
   save,
   userExists,
-  findTaskFromUser,
+  findTasksByUser,
   findUserById,
 } = require('../repository/userRepository');
 const User = require('../entities/user');
@@ -49,7 +49,7 @@ async function findTasks(req, res) {
   if (checkUser) {
     return checkUser;
   }
-  const tasks = await findTaskFromUser(id);
+  const tasks = await findTasksByUser(id);
   return res.json({ tasks });
 }
 

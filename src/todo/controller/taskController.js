@@ -1,5 +1,9 @@
 const Task = require('../entities/task');
-const { save, taskExists } = require('../repository/taskRepository');
+const {
+  save,
+  taskExists,
+  deleteTask,
+} = require('../repository/taskRepository');
 const { findUserById } = require('../repository/userRepository');
 
 const checkUserExists = async (res, result) => {
@@ -44,6 +48,13 @@ async function insert(req, res) {
   return res.send(result);
 }
 
+async function deleteTaskByUser(req, res) {
+  const { id, user } = req.params;
+  deleteTask(id, user);
+  return res.sendStatus(200);
+}
+
 module.exports = {
   insert,
+  deleteTaskByUser,
 };

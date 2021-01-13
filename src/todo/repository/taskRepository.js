@@ -23,7 +23,16 @@ async function taskExists(task) {
   }
 }
 
+async function deleteTask(id, userId) {
+  try {
+    return await knex('tasks').where({ id, user_id: userId }).del();
+  } catch (err) {
+    return err;
+  }
+}
+
 module.exports = {
   save,
   taskExists,
+  deleteTask,
 };
