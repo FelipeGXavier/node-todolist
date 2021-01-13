@@ -2,8 +2,8 @@ const knex = require('../../config/connect');
 
 async function save(user) {
   try {
-    await knex('users').insert({ email: user });
-    return { email: user };
+    await knex('users').insert(user);
+    return user;
   } catch (err) {
     return err;
   }
