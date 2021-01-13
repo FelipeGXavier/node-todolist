@@ -9,6 +9,15 @@ async function save(user) {
   }
 }
 
+async function findTaskFromUser(id) {
+  try {
+    const tasks = await knex('users').where({ id }).select('*');
+    return tasks;
+  } catch (err) {
+    return err;
+  }
+}
+
 async function userExists(email) {
   try {
     const row = await knex('users').where({ email }).first();
@@ -37,4 +46,5 @@ module.exports = {
   save,
   userExists,
   findUserById,
+  findTaskFromUser,
 };
