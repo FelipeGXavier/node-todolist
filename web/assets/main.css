@@ -31,6 +31,15 @@ html {
   margin: 0 auto;
 }
 
+@media screen and (max-width: 900px) {
+  .todo {
+    width: 90%;
+  }
+  .header > .title {
+    font-size: 1.5rem;
+  }
+}
+
 .todo-insert {
   display: flex;
   flex-wrap: wrap;
@@ -122,6 +131,7 @@ input.todo-title {
   padding: 0;
   align-items: center;
   flex-direction: column;
+  width: 100%;
   list-style: none;
 }
 

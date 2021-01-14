@@ -32,15 +32,15 @@ async function insert(req, res) {
   // eslint-disable-next-line camelcase
   const { title, description, due_date, user_id } = req.body;
   const result = await Task.create({ title, description, due_date, user_id });
-  const checkUser = await checkUserExists(res, result);
-  if (checkUser) {
-    return checkUser;
-  }
-  const checkTask = await checkTaskExists(res, result);
-  if (checkTask) {
-    return checkTask;
-  }
   if (result.valid) {
+    const checkUser = await checkUserExists(res, result);
+    if (checkUser) {
+      return checkUser;
+    }
+    const checkTask = await checkTaskExists(res, result);
+    if (checkTask) {
+      return checkTask;
+    }
     const task = await save(result.task);
     return res.send(task);
   }
