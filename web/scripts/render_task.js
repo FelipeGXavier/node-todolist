@@ -3,7 +3,7 @@ export function renderTasks(tasks) {
     return `<h4> Nenhuma informação para exibir! </h4>`;
   } else {
     const tasksHtml = tasks.map((task) => {
-      return ` <li class="list-item">
+      return ` <li class="list-item" data-id="${task.id}">
           <div class="box">
               <h1 class="item-title">${task.title}</h1>
               <span class="due-date">${formatDate(task.due_date)}</span>
@@ -16,7 +16,7 @@ export function renderTasks(tasks) {
 }
 
 export function appendTask(task) {
-  return ` <li class="list-item">
+  return ` <li class="list-item" data-id="${task.id}">
             <div class="box">
                 <h1 class="item-title">${task.title}</h1>
                 <span class="due-date">${formatDate(task.due_date)}</span>

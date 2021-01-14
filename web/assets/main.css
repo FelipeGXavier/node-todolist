@@ -143,6 +143,7 @@ input.todo-title {
 .list-item {
   padding: 1rem;
   width: 60%;
+  cursor: pointer;
   border-radius: 4px;
   margin-bottom: 2rem;
   -webkit-box-shadow: 1px 4px 15px -3px rgba(0, 0, 0, 0.5);

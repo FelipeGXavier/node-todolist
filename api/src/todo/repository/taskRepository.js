@@ -2,8 +2,8 @@ const knex = require('../../config/connect');
 
 async function save(task) {
   try {
-    await knex('tasks').insert(task);
-    return task;
+    const id = await knex('tasks').insert(task, 'id');
+    return { id: id[0], ...task };
   } catch (err) {
     return err;
   }
