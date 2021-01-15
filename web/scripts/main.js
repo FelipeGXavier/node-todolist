@@ -5,6 +5,7 @@ import * as removeTask from "./remove_task";
 
 const taskListElement = document.getElementById("list");
 const addTaskBtn = document.getElementById("btn");
+const filterInput = document.getElementById("filter");
 
 document.addEventListener("DOMContentLoaded", function () {
   ping();
@@ -14,16 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     .then((body) => {
       body = JSON.parse(body);
       const tasks = body.tasks;
-      const taskHtmlList = render.renderTasks(tasks);
-      taskListElement.innerHTML = taskHtmlList;
-      const taskItemsElements = Array.from(
-        document.getElementsByClassName("list-item")
-      );
-      taskItemsElements.forEach((element) => {
-        element.addEventListener("click", function (event) {
-          removeAction(event);
-        });
-      });
+      displayTasksInList(tasks);
     });
 });
 
@@ -50,6 +42,7 @@ addTaskBtn.addEventListener("click", (e) => {
             "beforeend",
             render.appendTask(task)
           );
+          reset();
           const noTasksMessage = document.querySelector("ul.list > h4");
           if (noTasksMessage) {
             taskListElement.removeChild(noTasksMessage);
@@ -72,11 +65,24 @@ const removeAction = (event) => {
       taskListElement.removeChild(
         taskListElement.children[indexToRemoveFromDom]
       );
+      if (taskListElement.children.length == 0) {
+        taskListElement.insertAdjacentHTML(
+          "beforeend",
+          `<h4> Nenhuma informação para exibir! </h4>`
+        );
+      }
       alert("Removido");
     }
   });
   return;
 };
+
+filterInput.addEventListener("input", (event) => {
+  const inputFilterValue = event.target.value;
+  task.loadTasksByDate(inputFilterValue).then((tasks) => {
+    displayTasksInList(tasks);
+  });
+});
 
 const findIndexFromItem = (dataId) => {
   const items = Array.from(taskListElement.children);
@@ -88,6 +94,18 @@ const findIndexFromItem = (dataId) => {
   }
 };
 
+const displayTasksInList = (tasks) => {
+  taskListElement.innerHTML = render.renderTasks(tasks);
+  const taskItemsElements = Array.from(
+    document.getElementsByClassName("list-item")
+  );
+  taskItemsElements.forEach((element) => {
+    element.addEventListener("click", function (event) {
+      removeAction(event);
+    });
+  });
+};
+
 const ping = () => {
   return task
     .ping()
@@ -95,4 +113,13 @@ const ping = () => {
       return response.text();
     })
     .then((body) => console.log(body));
+};
+
+const reset = () => {
+  const title = document.getElementById("title");
+  const description = document.getElementById("description");
+  const dueDate = document.getElementById("dueDate");
+  title.value = "";
+  description.value = "";
+  dueDate.value = "";
 };
